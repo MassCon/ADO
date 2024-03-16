@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ADO_NET_Lesson1.AdditionalWindows"
         mc:Ignorable="d"
-         Title="DalWindow" Height="450" Width="800">
+          Title="DalWindow" Height="450" Width="800">
     <Grid ShowGridLines="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -37,6 +37,54 @@
                         <GridViewColumn
                             Header="DeleteDt"
                             DisplayMemberBinding="{Binding Path=DeleteDt}"/>
+                        <GridViewColumn
+                            Header="MainManagers"
+                            DisplayMemberBinding="{Binding Path=MainManagers.Count}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Column="1">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Content="Менеджери" HorizontalAlignment="Center"
+                   FontSize="22" FontWeight="DemiBold"/>
+                <Button x:Name="AddManager_Btn" Content="+"
+                        Width="30" Height="30"  Margin="5 5 5 5" FontSize="20"
+                        Click="AddManager_Btn_Click"/>
+            </StackPanel>
+            <ListView x:Name="ManagersView" ItemsSource="{Binding ManagersList}" 
+                      MouseDoubleClick="ManagersView_MouseDoubleClick"
+                      Height="590"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      ScrollViewer.CanContentScroll="True">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn
+                            Header="Id"
+                            DisplayMemberBinding="{Binding Path=Id}"/>
+                        <GridViewColumn
+                            Header="Name"
+                            DisplayMemberBinding="{Binding Path=Name}"/>
+                        <GridViewColumn
+                            Header="Surname"
+                            DisplayMemberBinding="{Binding Path=Surname}"/>
+                        <GridViewColumn
+                            Header="MainDep"
+                            DisplayMemberBinding="{Binding Path=MainDep.Name}"/>
+                        <GridViewColumn
+                            Header="SecDep"
+                            DisplayMemberBinding="{Binding Path=SecDep.Name}"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Chief}">
+                            <Grid>
+                                <TextBlock Text="{Binding Path=Name}"/>
+                                <TextBlock Text=" "/>
+                                <TextBlock Text="{Binding Path=Surname}"/>
+                            </Grid>
+                        </GridViewColumn>
+                        <GridViewColumn
+                            Header="Subordinates"
+                            DisplayMemberBinding="{Binding Path=Subordinates.Count}"/>
+                        <!--DisplayMemberBinding="{Binding Path=Chief.Name} + {Binding Path=Chief.Surname}"/>-->
                     </GridView>
                 </ListView.View>
             </ListView>

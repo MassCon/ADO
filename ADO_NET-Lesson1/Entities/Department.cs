@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
+using ADO_NET_Lesson1.DAL;
 
 namespace ADO_NET_Lesson1.Entities
 {
@@ -28,6 +29,16 @@ namespace ADO_NET_Lesson1.Entities
         public override string ToString()
         {
             return $"{Id.ToString()[..4]} {Name}";
+        }
+        /////////////// Navigation Properties (Inverse) ///////////////
+        internal DataContext? dataContext;
+        public List<Manager>? MainManagers
+        {
+            get => dataContext?
+                .Managers
+                .GetAll()
+                .Where(m => m.IdMainDep == this.Id)
+                .ToList();
         }
     }
 }

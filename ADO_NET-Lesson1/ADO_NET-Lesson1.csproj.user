@@ -13,6 +13,9 @@
     <Compile Update="AdditionalWindows\DepartmentCrudWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="AdditionalWindows\EfWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="AdditionalWindows\ManagerCrudWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -39,6 +42,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="AdditionalWindows\DepartmentCrudWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="AdditionalWindows\EfWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="AdditionalWindows\ManagerCrudWindow.xaml">

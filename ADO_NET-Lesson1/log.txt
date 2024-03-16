@@ -1,1 +1,3 @@
 SEVERE - 16.03.2024 18:59:41: DepartmentApi::GetAll DeleteDt
+SEVERE - 17.03.2024 0:12:38: DepartmentApi::GetAll DeleteDt
+SEVERE - 17.03.2024 0:12:38: ManagerApi::GetAll Invalid column name 'DeleteDt'.

@@ -1,10 +1,4 @@
 ﻿using System.Windows;
-
-using System.Data.SqlClient;
-using System.Windows.Media;
-using System;
-using System.Reflection.Metadata;
-using System.IO;
 using ADO_NET_Lesson1.AdditionalWindows;
 
 namespace ADO_NET_Lesson1
@@ -37,6 +31,13 @@ namespace ADO_NET_Lesson1
         {
             this.Hide();
             new DalWindow().ShowDialog();
+            this.Show();
+        }
+
+        private void Ef_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            new EfWindow().ShowDialog();
             this.Show();
         }
     }

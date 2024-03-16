@@ -12,6 +12,7 @@ namespace ADO_NET_Lesson1.DAL
     {
         private SqlConnection _connection;
         internal DepartmentApi Departments { get; set; }
+        internal ManagerApi Managers { get; set; }
         public DataContext()
         {
             _connection = new SqlConnection(App.ConnectionString);
@@ -25,8 +26,8 @@ namespace ADO_NET_Lesson1.DAL
                 App.Logger.Log(msg, "SEVERE");
                 throw new Exception("Context creation failed");
             }
-            Departments = new(_connection);
-            _connection.Close();
+            Departments = new(_connection, this);
+            Managers = new(_connection, this);
         }
     }
 }

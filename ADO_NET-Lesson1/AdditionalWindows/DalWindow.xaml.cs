@@ -25,11 +25,13 @@ namespace ADO_NET_Lesson1.AdditionalWindows
     {
         private readonly DataContext dataContext;
         public ObservableCollection<Entities.Department> DepartmentsList { get; set; }
+        public ObservableCollection<Entities.Manager> ManagersList { get; set; }
         public DalWindow()
         {
             InitializeComponent();
             dataContext = new DataContext();
             DepartmentsList = new(dataContext.Departments.GetAll());
+            ManagersList = new(dataContext.Managers.GetAll());
             DataContext = this;
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -57,6 +59,32 @@ namespace ADO_NET_Lesson1.AdditionalWindows
             if (dialog.ShowDialog() == true)
             {
                 dataContext.Departments.Add(dialog.Department);
+            }
+        }
+
+        private void AddManager_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            ManagerCrudWindow dialog = new();
+            if (dialog.ShowDialog() == true)
+            {
+                //dataContext.Departments.Add(dialog.Manager);
+            }
+        }
+
+        private void ManagersView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is ListView item)
+            {
+                if (item.SelectedItem is Entities.Manager manager)
+                {
+                    MessageBox.Show(manager.ToString());
+                    //ManagerCrudWindow dialog = new ManagerCrudWindow();
+                    //dialog.Manager = manager;
+                    //if (dialog.ShowDialog() == true)
+                    //{
+                    //    //dataContext.Departments.Update(dialog.Manager);
+                    //}
+                }
             }
         }
     }

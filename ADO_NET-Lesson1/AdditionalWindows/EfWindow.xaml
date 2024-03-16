@@ -1,0 +1,44 @@
+﻿<Window x:Class="ADO_NET_Lesson1.AdditionalWindows.EfWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ADO_NET_Lesson1.AdditionalWindows"
+        mc:Ignorable="d"
+       Title="EfWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <Label>Monitor</Label>
+            <TextBlock x:Name="MonitorBlock"></TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
+                    Grid.Row="0" Grid.Column="1">
+            <StackPanel Orientation="Horizontal">
+                <Label>Departments</Label>
+                <Button x:Name="AddDepartment" Click="AddDepartment_Click">Add</Button>
+            </StackPanel>
+            <ListView x:Name="Departments_LstVw">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn
+                            Header="Id"
+                            DisplayMemberBinding="{Binding Path=Id}"/>
+                        <GridViewColumn
+                            Header="Name"
+                            DisplayMemberBinding="{Binding Path=Name}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+    </Grid>
+</Window>

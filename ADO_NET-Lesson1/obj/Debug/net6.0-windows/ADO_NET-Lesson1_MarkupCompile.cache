@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\andre\source\repos\ADO_NET-Lesson1\ADO_NET-Lesson1\App.xaml
-81224745426
+9-635538834
 
-171599550466
-195-613133574
-AdditionalWindows\DalWindow.xaml;AdditionalWindows\DepartmentCrudWindow.xaml;AdditionalWindows\ManagerCrudWindow.xaml;AdditionalWindows\OmrWindow.xaml;AdditionalWindows\ProductCrudWindow.xaml;AdditionalWindows\SaleCrudWindow.xaml;AdditionalWindows\StatusWindow.xaml;MainWindow.xaml;
+242009600667
+2262076848494
+AdditionalWindows\DalWindow.xaml;AdditionalWindows\DepartmentCrudWindow.xaml;AdditionalWindows\EfWindow.xaml;AdditionalWindows\ManagerCrudWindow.xaml;AdditionalWindows\OmrWindow.xaml;AdditionalWindows\ProductCrudWindow.xaml;AdditionalWindows\SaleCrudWindow.xaml;AdditionalWindows\StatusWindow.xaml;MainWindow.xaml;
 
 False
 

@@ -10,10 +10,13 @@ namespace ADO_NET_Lesson1.DAL
     internal class DepartmentApi
     {
         private readonly SqlConnection _connection;
+        private readonly DataContext _dataContext;
+        private List<Entities.Department> list;
 
-        public DepartmentApi(SqlConnection connection)
+        public DepartmentApi(SqlConnection connection, DataContext dataContext)
         {
             _connection = connection;
+            _dataContext = dataContext;
         }
         public bool Add(Department department)
         {
@@ -76,18 +79,23 @@ namespace ADO_NET_Lesson1.DAL
                 return false;
             }
         }
-        public List<Entities.Department> GetAll()
+        /// <summary>
+        /// Returns list of DB table Departments
+        /// </summary>
+        /// <param name="reload">Send new query or use cached data</param>
+        /// <returns></returns>
+        public List<Entities.Department> GetAll(bool reload = false)
         {
-            var list = new List<Entities.Department>();
+            if (list != null && !reload) return list;
+
+            list = new List<Department>();
             try
             {
-                _connection.Open();
-
                 using SqlCommand cmd = new("SELECT * FROM Departments", _connection);
                 using var reader = cmd.ExecuteReader();
 
                 while (reader.Read())
-                    list.Add(new Department(reader));
+                    list.Add(new Department(reader) { dataContext = _dataContext });
 
             }
             catch (Exception ex)
