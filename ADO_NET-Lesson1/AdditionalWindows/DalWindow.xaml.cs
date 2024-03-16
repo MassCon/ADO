@@ -1,4 +1,5 @@
 ﻿using ADO_NET_Lesson1.DAL;
+using ADO_NET_Lesson1.Entities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -41,10 +42,12 @@ namespace ADO_NET_Lesson1.AdditionalWindows
             {
                 if (item.SelectedItem is Entities.Department department)
                 {
-                    //DepartmentCrudWindow dialog = new DepartmentCrudWindow(_connection);
-                    //dialog.Department = department;
-                    //dialog.ShowDialog();
-                    MessageBox.Show(department.ToString());
+                    DepartmentCrudWindow dialog = new DepartmentCrudWindow();
+                    dialog.Department = department;
+                    if (dialog.ShowDialog() == true)
+                    {
+                        dataContext.Departments.Update(dialog.Department);
+                    }
                 }
             }
         }
@@ -53,7 +56,7 @@ namespace ADO_NET_Lesson1.AdditionalWindows
             DepartmentCrudWindow dialog = new();
             if (dialog.ShowDialog() == true)
             {
-                MessageBox.Show(dialog.Department.ToString());
+                dataContext.Departments.Add(dialog.Department);
             }
         }
     }

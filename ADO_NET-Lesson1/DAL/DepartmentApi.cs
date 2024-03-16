@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Reflection;
+using System.Windows;
 
 namespace ADO_NET_Lesson1.DAL
 {
@@ -22,6 +23,48 @@ namespace ADO_NET_Lesson1.DAL
                 cmd.CommandText = $"INSERT INTO Departments (Id, Name) VALUES( @id, @name)";
                 cmd.Parameters.AddWithValue("@id", department.Id);
                 cmd.Parameters.AddWithValue("@name", department.Name);
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string msg = DateTime.Now + ": " + this.GetType().Name + "::" + MethodBase.GetCurrentMethod()?.Name + " " + ex.Message;
+
+                App.Logger.Log(msg, "SEVERE");
+                return false;
+            }
+        }
+        public bool Update(Department department)
+        {
+            try
+            {
+                String sql = "UPDATE Departments SET Name=(@name), DeleteDt=(@DeleteDt) WHERE Id=(@id)";
+                using SqlCommand cmd = new(sql, _connection);
+                cmd.Parameters.AddWithValue("@name", department.Name);
+                cmd.Parameters.AddWithValue("@DeleteDt", department.DeleteDt is null ? DBNull.Value : department.DeleteDt);
+                cmd.Parameters.AddWithValue("@id", department.Id);
+
+
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string msg = DateTime.Now + ": " + this.GetType().Name + "::" + MethodBase.GetCurrentMethod()?.Name + " " + ex.Message;
+
+                App.Logger.Log(msg, "SEVERE");
+                return false;
+            }
+        }
+        public bool Delete(Department department)
+        {
+            try
+            {
+                String sql = "UPDATE Departments SET DeleteDt=(@DeleteDt) WHERE Id=(@id)";
+                using SqlCommand cmd = new(sql, _connection);
+                cmd.Parameters.AddWithValue("@DeleteDt", department.DeleteDt is null ? DBNull.Value : department.DeleteDt);
+                cmd.Parameters.AddWithValue("@id", department.Id);
+
                 cmd.ExecuteNonQuery();
                 return true;
             }
