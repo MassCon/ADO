@@ -118,51 +118,21 @@ namespace ADO_NET_Lesson1.AdditionalWindows
             else
                 MessageBox.Show("ManagerId_CmbBx.SelectedItem CAST Error");
 
-            //String sql = "UPDATE Sales SET Name=(@name), Surname=(@surname), Secname=(@secname), Id_main_dep=(@main_dep), Id_sec_dep=(@sec_dep), Id_chief=(@chief) WHERE Id=(@id)";
-            //using SqlCommand cmd = new(sql, _connection);
-            //cmd.Parameters.AddWithValue("@name", Manager.Name);
-            //cmd.Parameters.AddWithValue("@surname", Manager.Surname);
-            //cmd.Parameters.AddWithValue("@secname", Manager.Secname is null ? DBNull.Value : Manager.Secname);
-            //cmd.Parameters.AddWithValue("@main_dep", Manager.IdMainDep);
-            //cmd.Parameters.AddWithValue("@sec_dep", Manager.IdSecDep is null ? DBNull.Value : Manager.IdSecDep);
-            //cmd.Parameters.AddWithValue("@chief", Manager.IdChief is null ? DBNull.Value : Manager.IdChief);
-            //cmd.Parameters.AddWithValue("@id", Manager.Id);
-
-            //try
-            //{
-            //    cmd.ExecuteNonQuery();
-            //    MessageBox.Show("Зміни збережено!");
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
-
             DialogResult = true;
         }
         private void Delete_Btn_Click(object sender, RoutedEventArgs e)
         {
-            //var dialogResult = MessageBox.Show("Впевнені, що хочете вилучити співробітника?", "Вилучення", MessageBoxButton.OKCancel);
-            //if (dialogResult == MessageBoxResult.OK)
-            //{
-            //    Manager.DeleteDt = DateTime.Now;
-            //    String sql = "UPDATE Managers SET DeleteDt=(@delete_date) WHERE Id=(@id)";
-            //    using SqlCommand cmd = new(sql, _connection);
-            //    cmd.Parameters.AddWithValue("@delete_date", Manager.DeleteDt);
-            //    cmd.Parameters.AddWithValue("@id", Manager.Id);
+            var dialogResult = MessageBox.Show("Впевнені, що хочете вилучити продаж?", "Вилучення", MessageBoxButton.OKCancel);
+            if (dialogResult == MessageBoxResult.OK)
+            {
+                Sale.DeleteDt = DateTime.Now;
+            }
+            else
+            {
+                return;
+            }
 
-            //    try
-            //    {
-            //        cmd.ExecuteNonQuery();
-            //        MessageBox.Show("Вилучення успішне!");
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show(ex.Message);
-            //    }
-            //}
-
-            //DialogResult = true;
+            DialogResult = true;
         }
         private void Cancel_Btn_Click(object sender, RoutedEventArgs e)
         {

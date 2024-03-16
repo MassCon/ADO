@@ -243,7 +243,30 @@ namespace ADO_NET_Lesson1.AdditionalWindows
                 {
                     SaleCrudWindow dialog = new SaleCrudWindow() { Owner = this };
                     dialog.Sale = sale;
-                    dialog.ShowDialog();
+                    if (dialog.ShowDialog() == true)
+                    {
+                        if (dialog.Sale is not null)
+                        {
+                            String sql = "UPDATE Sales SET SaleDt=(@sale_dt), Product_Id=(@product), Quantity=(@quantity), Manager_Id=(@manager), DeleteDt=(@delete) WHERE Id=(@id)";
+                            using SqlCommand cmd = new(sql, _connection);
+                            cmd.Parameters.AddWithValue("@sale_dt", dialog.Sale.SaleDt);
+                            cmd.Parameters.AddWithValue("@product", dialog.Sale.Product_Id);
+                            cmd.Parameters.AddWithValue("@quantity", dialog.Sale.Quantity);
+                            cmd.Parameters.AddWithValue("@manager", dialog.Sale.Manager_Id);
+                            cmd.Parameters.AddWithValue("@delete", dialog.Sale.DeleteDt is null ? DBNull.Value : dialog.Sale.DeleteDt);
+                            cmd.Parameters.AddWithValue("@id", dialog.Sale.Id);
+
+                            try
+                            {
+                                cmd.ExecuteNonQuery();
+                                MessageBox.Show("Зміни збережено!");
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.Message);
+                            }
+                        }
+                    }
                 }
             }
         }

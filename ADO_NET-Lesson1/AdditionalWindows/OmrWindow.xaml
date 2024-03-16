@@ -141,6 +141,9 @@
                         <GridViewColumn
                             Header="Кількість"
                             DisplayMemberBinding="{Binding Path=Quantity}"/>
+                        <GridViewColumn
+                            Header="Дата видалення"
+                            DisplayMemberBinding="{Binding Path=DeleteDt}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
