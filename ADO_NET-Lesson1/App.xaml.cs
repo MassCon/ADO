@@ -13,5 +13,6 @@ namespace ADO_NET_Lesson1
     /// </summary>
     public partial class App : Application
     {
+        public static string ConnectionString = @"Data Source=ANDREW-LAPTOP;Initial Catalog=ADO-201;Integrated Security=True;";
     }
 }

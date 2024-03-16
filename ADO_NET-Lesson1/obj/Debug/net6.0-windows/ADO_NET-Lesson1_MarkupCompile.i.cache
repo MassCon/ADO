@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\andre\source\repos\ADO_NET-Lesson1\ADO_NET-Lesson1\App.xaml
-11407045341
+41702816486
 
-5481923676
+11-1753910819
 195-613133574
-MainWindow.xaml;
+AdditionalWindows\DepartmentCrudWindow.xaml;AdditionalWindows\OmrWindow.xaml;AdditionalWindows\StatusWindow.xaml;MainWindow.xaml;
 
 True
 
