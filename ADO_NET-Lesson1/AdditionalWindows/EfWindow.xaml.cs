@@ -81,8 +81,8 @@ namespace ADO_NET_Lesson1.AdditionalWindows
             var deletedCount = efContext.Sales.Where(s => s.DeleteDt.HasValue).Where(s => s.DeleteDt.Value.Date == DateTime.Today).Count();
             DeletedCount_Lbl.Content = deletedCount;
 
-            var query3 = efContext.Products
-                //.Where(s => s.SaleDt.Date == DateTime.Today)
+            // Best product by checks count
+            var bestProductByChecks = efContext.Products
                 .GroupJoin(
                   efContext.Sales.Where(s => s.SaleDt.Date == DateTime.Today),
                   p => p.Id,
@@ -92,15 +92,41 @@ namespace ADO_NET_Lesson1.AdditionalWindows
                       Name = p.Name,
                       Cnt = sales.Count()
                   }
-                ).OrderByDescending(g => g.Cnt);
+                ).OrderByDescending(g => g.Cnt).First();
 
-            BestProduct_Lbl.Content = query3.First().Name + " -- " + query3.First().Cnt;
+            BestProduct_Lbl.Content = bestProductByChecks.Name + " -- " + bestProductByChecks.Cnt;
 
-            foreach (var item in query3)
-            {
-                Log_TxtBlck.Text += $"{item.Name} -- {item.Cnt}\n";
-            }
+            // Best product by quantity
+            var bestProductByQuantity = efContext.Products
+                .GroupJoin(
+                  efContext.Sales.Where(s => s.SaleDt.Date == DateTime.Today),
+                  p => p.Id,
+                  s => s.Product_Id,
+                  (p, sales) => new
+                  {
+                      Name = p.Name,
+                      Quantity = sales.Sum(s => s.Quantity)
+                  }
+                ).OrderByDescending(g => g.Quantity).First();
 
+            BestProductByItems_Lbl.Content = bestProductByQuantity.Name + " -- " + bestProductByQuantity.Quantity;
+
+            // Best product by money
+            var bestProductByMoney = efContext.Products
+                .GroupJoin(
+                  efContext.Sales.Where(s => s.SaleDt.Date == DateTime.Today),
+                  p => p.Id,
+                  s => s.Product_Id,
+                  (p, sales) => new
+                  {
+                      Name = p.Name,
+                      Money = sales.Sum(s => s.Quantity) * p.Price
+                  }
+                ).OrderByDescending(g => g.Money).First();
+
+            BestProductByMoney_Lbl.Content = bestProductByMoney.Name + " -- " + bestProductByMoney.Money;
+
+            // Best manager by checks
             var queryMan = efContext.Managers
                 .GroupJoin(
                   efContext.Sales.Where(s => s.SaleDt.Date == DateTime.Today),
@@ -116,6 +142,7 @@ namespace ADO_NET_Lesson1.AdditionalWindows
 
             BestManager_Lbl.Content = queryMan.Manager.Surname + " " + queryMan.Manager.Name + "---" + queryMan.Cnt;
 
+            // Top 3
             var queryTop3 = efContext.Managers
                 .GroupJoin(
                   efContext.Sales.Where(s => s.SaleDt.Date == DateTime.Today),
@@ -136,6 +163,7 @@ namespace ADO_NET_Lesson1.AdditionalWindows
                     $"{i} - {item.Manager.Surname} {item.Manager.Name[0]}. -- {item.Cnt}\n";
             }
 
+            // Best manager by money
             var queryBestManByMoney = efContext.Managers
                 .GroupJoin(
                   efContext.Sales.Where(s => s.SaleDt.Date == DateTime.Today),
