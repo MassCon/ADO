@@ -53,6 +53,7 @@ namespace ADO_NET_Lesson1.AdditionalWindows
         }
         private void UpdateDailyStatistic()
         {
+            #region General stats
             // Checks
             var todaySales = efContext.Sales.Where(s => s.SaleDt.Date == DateTime.Today);
             SalesChecks_Lbl.Content = todaySales.Count().ToString();
@@ -80,7 +81,8 @@ namespace ADO_NET_Lesson1.AdditionalWindows
             // Deleted count
             var deletedCount = efContext.Sales.Where(s => s.DeleteDt.HasValue).Where(s => s.DeleteDt.Value.Date == DateTime.Today).Count();
             DeletedCount_Lbl.Content = deletedCount;
-
+            #endregion
+            #region Products stats
             // Best product by checks count
             var bestProductByChecks = efContext.Products
                 .GroupJoin(
@@ -125,7 +127,8 @@ namespace ADO_NET_Lesson1.AdditionalWindows
                 ).OrderByDescending(g => g.Money).First();
 
             BestProductByMoney_Lbl.Content = bestProductByMoney.Name + " -- " + bestProductByMoney.Money;
-
+            #endregion
+            #region Managers stats
             // Best manager by checks
             var queryMan = efContext.Managers
                 .GroupJoin(
@@ -180,7 +183,62 @@ namespace ADO_NET_Lesson1.AdditionalWindows
                   }
                 ).OrderByDescending(g => g.Cnt).First();
 
-            BestManagerByMoney_Lbl.Content = $"{queryBestManByMoney.Manager.Surname} {queryBestManByMoney.Manager.Name[0]}. -- {queryBestManByMoney.Cnt} hrn";
+            BestManagerByMoney_Lbl.Content = $"{queryBestManByMoney.Manager.Surname} {queryBestManByMoney.Manager.Name[0]}. -- {queryBestManByMoney.Cnt} UAH";
+            #endregion
+            #region Departments stats
+            // Can't translate without ToList
+            //var departmentsStats = efContext.Departments.ToList()
+            //    .GroupJoin(
+            //    efContext.Managers,
+            //    dep => dep.Id,
+            //    man => man.IdMainDep,
+            //    (dep, managers) => new
+            //    {
+            //        Department = dep,
+            //        Cnt = managers
+            //            .GroupJoin(
+            //                efContext.Sales.Where(s => s.SaleDt.Date == DateTime.Today),
+            //                m => m.Id,
+            //                s => s.Manager_Id,
+            //                (m, sales) => new
+            //                {
+            //                    ManCount = sales.Count()
+            //                }
+            //            ).Sum(c => c.ManCount)
+            //    }
+            //    ).OrderByDescending(dep => dep.Cnt);
+
+            #region Another option but cant translate
+            var departmentsStats = efContext.Departments.ToList()
+                .GroupJoin(
+                efContext.Managers
+                .GroupJoin(
+                efContext.Sales.Where(s => s.SaleDt.Date == DateTime.Today),
+                manager => manager.Id,
+                sale => sale.Manager_Id,
+                (manager, sales) => new
+                {
+                    Manager = manager,
+                    Cnt = sales.Count(),
+                    Sum = sales.Sum(s => s.Quantity)
+                }),
+                d => d.Id,
+                m => m.Manager.IdMainDep,
+                (dep, managers) => new
+                {
+                    Department = dep,
+                    Cnt = managers.Sum(m => m.Cnt),
+                    Sum = managers.Sum(m => m.Sum)
+                }).OrderByDescending(d => d.Cnt);
+            #endregion
+
+            foreach (var department in departmentsStats)
+            {
+                DepartmentsStats_Lbl.Content += $"{department.Department.Name} -- {department.Cnt} -- {department.Sum}\n";
+            }
+
+
+            #endregion
         }
 
         private void AddDepartment_Click(object sender, RoutedEventArgs e)
