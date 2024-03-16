@@ -21,14 +21,23 @@ namespace ADO_NET_Lesson1
 
         private void Status_Btn_Click(object sender, RoutedEventArgs e)
         {
-            Window window = new StatusWindow();
-            window.Show();
+            this.Hide();
+            new StatusWindow().ShowDialog();
+            this.Show();
         }
 
         private void ORM_Btn_Click(object sender, RoutedEventArgs e)
         {
-            Window window = new OrmWindow();
-            window.Show();
+            this.Hide();
+            new OrmWindow().ShowDialog();
+            this.Show();
+        }
+
+        private void DAL_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            new DalWindow().ShowDialog();
+            this.Show();
         }
     }
 }

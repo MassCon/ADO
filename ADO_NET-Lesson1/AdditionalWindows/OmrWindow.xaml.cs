@@ -23,16 +23,18 @@ namespace ADO_NET_Lesson1.AdditionalWindows
     /// </summary>
     public partial class OrmWindow : Window
     {
-        public ObservableCollection<Entities.Department> departments { get; set; }
-        public ObservableCollection<Entities.Product> products { get; set; }
-        public ObservableCollection<Entities.Manager> managers { get; set; }
+        public ObservableCollection<Department> departments { get; set; }
+        public ObservableCollection<Product> products { get; set; }
+        public ObservableCollection<Manager> managers { get; set; }
+        public ObservableCollection<Sale> sales { get; set; }
         public SqlConnection _connection;
         public OrmWindow()
         {
             InitializeComponent();
             departments = new();
             products = new();
-            managers = new ObservableCollection<Entities.Manager>();
+            managers = new ObservableCollection<Manager>();
+            sales = new ObservableCollection<Sale>();
             DataContext = this;
             _connection = new(App.ConnectionString);
         }
@@ -108,6 +110,26 @@ namespace ADO_NET_Lesson1.AdditionalWindows
             }
             #endregion
 
+            #region Sales
+            try
+            {
+                using SqlCommand cmd = new() { Connection = _connection };
+
+                cmd.CommandText = "SELECT S.* FROM Sales S";
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                    sales.Add(new Sale(reader));
+
+                reader.Close();
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message, "Window will be closed", MessageBoxButton.OK, MessageBoxImage.Error);
+                Close();
+            }
+            #endregion
+
         }
 
         #region Редагування записів
@@ -117,9 +139,29 @@ namespace ADO_NET_Lesson1.AdditionalWindows
             {
                 if (item.SelectedItem is Entities.Department department)
                 {
-                    DepartmentCrudWindow dialog = new DepartmentCrudWindow(_connection);
+                    DepartmentCrudWindow dialog = new DepartmentCrudWindow();
                     dialog.Department = department;
-                    dialog.ShowDialog();
+                    if (dialog.ShowDialog() == true)
+                    {
+                        if (dialog.Department is not null)
+                        {
+                            String sql = "UPDATE Departments SET Name=(@name), DeleteDt=(@DeleteDt) WHERE Id=(@id)";
+                            using SqlCommand cmd = new(sql, _connection);
+                            cmd.Parameters.AddWithValue("@name", dialog.Department.Name);
+                            cmd.Parameters.AddWithValue("@DeleteDt", dialog.Department.DeleteDt is null ? DBNull.Value : dialog.Department.DeleteDt);
+                            cmd.Parameters.AddWithValue("@id", dialog.Department.Id);
+
+                            try
+                            {
+                                cmd.ExecuteNonQuery();
+                                MessageBox.Show("Зміни збережено!");
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.Message);
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -129,9 +171,30 @@ namespace ADO_NET_Lesson1.AdditionalWindows
             {
                 if (item.SelectedItem is Entities.Product product)
                 {
-                    ProductCrudWindow dialog = new ProductCrudWindow(_connection);
+                    ProductCrudWindow dialog = new ProductCrudWindow();
                     dialog.Product = product;
-                    dialog.ShowDialog();
+                    if (dialog.ShowDialog() == true)
+                    {
+                        if (dialog.Product is not null)
+                        {
+                            String sql = "UPDATE Products SET Name=(@name), Price=(@price), DeleteDt=(@deleteDt) WHERE Id=(@id)";
+                            using SqlCommand cmd = new(sql, _connection);
+                            cmd.Parameters.AddWithValue("@name", dialog.Product.Name);
+                            cmd.Parameters.AddWithValue("@price", dialog.Product.Price);
+                            cmd.Parameters.AddWithValue("@deleteDt", dialog.Product.DeleteDt is null ? DBNull.Value : dialog.Product.DeleteDt);
+                            cmd.Parameters.AddWithValue("@id", dialog.Product.Id);
+
+                            try
+                            {
+                                cmd.ExecuteNonQuery();
+                                MessageBox.Show("Зміни збережено!");
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.Message);
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -141,8 +204,45 @@ namespace ADO_NET_Lesson1.AdditionalWindows
             {
                 if (item.SelectedItem is Entities.Manager manager)
                 {
-                    ManagerCrudWindow dialog = new ManagerCrudWindow(_connection) { Owner = this };
+                    ManagerCrudWindow dialog = new ManagerCrudWindow() { Owner = this };
                     dialog.Manager = manager;
+                    if (dialog.ShowDialog() == true)
+                    {
+                        if (dialog.Manager is not null)
+                        {
+                            String sql = "UPDATE Managers SET Name=(@name), Surname=(@surname), Secname=(@secname), Id_main_dep=(@main_dep), Id_sec_dep=(@sec_dep), Id_chief=(@chief), DeleteDt=(@delete) WHERE Id=(@id)";
+                            using SqlCommand cmd = new(sql, _connection);
+                            cmd.Parameters.AddWithValue("@name", dialog.Manager.Name);
+                            cmd.Parameters.AddWithValue("@surname", dialog.Manager.Surname);
+                            cmd.Parameters.AddWithValue("@secname", dialog.Manager.Secname is null ? DBNull.Value : dialog.Manager.Secname);
+                            cmd.Parameters.AddWithValue("@main_dep", dialog.Manager.IdMainDep);
+                            cmd.Parameters.AddWithValue("@sec_dep", dialog.Manager.IdSecDep is null ? DBNull.Value : dialog.Manager.IdSecDep);
+                            cmd.Parameters.AddWithValue("@chief", dialog.Manager.IdChief is null ? DBNull.Value : dialog.Manager.IdChief);
+                            cmd.Parameters.AddWithValue("@delete", dialog.Manager.DeleteDt is null ? DBNull.Value : dialog.Manager.DeleteDt);
+                            cmd.Parameters.AddWithValue("@id", dialog.Manager.Id);
+
+                            try
+                            {
+                                cmd.ExecuteNonQuery();
+                                MessageBox.Show("Зміни збережено!");
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.Message);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        private void SalesView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is ListView item)
+            {
+                if (item.SelectedItem is Sale sale)
+                {
+                    SaleCrudWindow dialog = new SaleCrudWindow() { Owner = this };
+                    dialog.Sale = sale;
                     dialog.ShowDialog();
                 }
             }
@@ -152,7 +252,7 @@ namespace ADO_NET_Lesson1.AdditionalWindows
         #region Додавання записів
         private void AddDepartment_Btn_Click(object sender, RoutedEventArgs e)
         {
-            DepartmentCrudWindow dialog = new DepartmentCrudWindow(_connection);
+            DepartmentCrudWindow dialog = new DepartmentCrudWindow();
             if (dialog.ShowDialog() == true)
             {
                 if (dialog.Department is not null)
@@ -176,7 +276,7 @@ namespace ADO_NET_Lesson1.AdditionalWindows
         }
         private void AddProduct_Btn_Click(object sender, RoutedEventArgs e)
         {
-            ProductCrudWindow dialog = new ProductCrudWindow(_connection);
+            ProductCrudWindow dialog = new ProductCrudWindow();
             if (dialog.ShowDialog() == true)
             {
                 if (dialog.Product is not null)
@@ -216,7 +316,7 @@ namespace ADO_NET_Lesson1.AdditionalWindows
         }
         private void AddManager_Btn_Click(object sender, RoutedEventArgs e)
         {
-            ManagerCrudWindow dialog = new ManagerCrudWindow(_connection) { Owner = this };
+            ManagerCrudWindow dialog = new ManagerCrudWindow() { Owner = this };
             if (dialog.ShowDialog() == true)
             {
                 if (dialog.Manager is not null)
@@ -235,6 +335,33 @@ namespace ADO_NET_Lesson1.AdditionalWindows
                     {
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Співробітника успішно додано!");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
+        }
+        private void AddSale_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            SaleCrudWindow dialog = new SaleCrudWindow() { Owner = this };
+            if (dialog.ShowDialog() == true)
+            {
+                if (dialog.Sale is not null)
+                {
+                    string sql = "INSERT INTO Sales(Id, SaleDt, Product_Id, Quantity, Manager_Id) VALUES(@id, @saleDt, @productId, @quantity, @managerId)";
+                    using SqlCommand cmd = new SqlCommand(sql, _connection);
+                    cmd.Parameters.AddWithValue("@saleDt", dialog.Sale.SaleDt);
+                    cmd.Parameters.AddWithValue("@productId", dialog.Sale.Product_Id);
+                    cmd.Parameters.AddWithValue("@quantity", dialog.Sale.Quantity);
+                    cmd.Parameters.AddWithValue("@managerId", dialog.Sale.Manager_Id);
+                    cmd.Parameters.AddWithValue("@id", dialog.Sale.Id);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Продаж успішно додано!");
                     }
                     catch (Exception ex)
                     {

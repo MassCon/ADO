@@ -13,6 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="SQL\AddSalesTable.sql">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
     <None Update="SQL\AddDeleteToManagers.sql">
       <Generator>MSBuild:Compile</Generator>
     </None>

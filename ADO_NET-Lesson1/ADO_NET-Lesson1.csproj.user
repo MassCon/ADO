@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="AdditionalWindows\DalWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="AdditionalWindows\DepartmentCrudWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -19,6 +22,9 @@
     <Compile Update="AdditionalWindows\ProductCrudWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="AdditionalWindows\SaleCrudWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="AdditionalWindows\StatusWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -29,6 +35,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="AdditionalWindows\DalWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="AdditionalWindows\DepartmentCrudWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -39,6 +48,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="AdditionalWindows\ProductCrudWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="AdditionalWindows\SaleCrudWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="AdditionalWindows\StatusWindow.xaml">

@@ -9,14 +9,18 @@
         Title="MainWindow" Height="560" Width="420">
     <Grid>
         <StackPanel>
-            <Button x:Name="Status_Btn" Content="Open Status Window" 
+            <Button x:Name="Status_Btn" Content="Основи технології" 
                 Grid.Column="0" Margin="50" Height="90"
                 FontSize="25" FontWeight="DemiBold"
                 Click="Status_Btn_Click"/>
-            <Button x:Name="ORM_Btn" Content="Open ORM Window"
+            <Button x:Name="ORM_Btn" Content="ORM"
                 Grid.Column="1" Margin="50" Height="90"
                 FontSize="25" FontWeight="DemiBold"
                 Click="ORM_Btn_Click"/>
+            <Button x:Name="DAL_Btn" Content="DAL, Data context"
+                Grid.Column="1" Margin="50" Height="90"
+                FontSize="25" FontWeight="DemiBold"
+                Click="DAL_Btn_Click"/>
         </StackPanel>
     </Grid>
 </Window>

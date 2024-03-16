@@ -37,3 +37,7 @@ C:\Users\andre\source\repos\ADO_NET-Lesson1\ADO_NET-Lesson1\obj\Debug\net6.0-win
 C:\Users\andre\source\repos\ADO_NET-Lesson1\ADO_NET-Lesson1\obj\Debug\net6.0-windows\AdditionalWindows\ProductCrudWindow.g.cs
 C:\Users\andre\source\repos\ADO_NET-Lesson1\ADO_NET-Lesson1\obj\Debug\net6.0-windows\AdditionalWindows\ManagerCrudWindow.baml
 C:\Users\andre\source\repos\ADO_NET-Lesson1\ADO_NET-Lesson1\obj\Debug\net6.0-windows\AdditionalWindows\ProductCrudWindow.baml
+C:\Users\andre\source\repos\ADO_NET-Lesson1\ADO_NET-Lesson1\obj\Debug\net6.0-windows\AdditionalWindows\DalWindow.g.cs
+C:\Users\andre\source\repos\ADO_NET-Lesson1\ADO_NET-Lesson1\obj\Debug\net6.0-windows\AdditionalWindows\SaleCrudWindow.g.cs
+C:\Users\andre\source\repos\ADO_NET-Lesson1\ADO_NET-Lesson1\obj\Debug\net6.0-windows\AdditionalWindows\DalWindow.baml
+C:\Users\andre\source\repos\ADO_NET-Lesson1\ADO_NET-Lesson1\obj\Debug\net6.0-windows\AdditionalWindows\SaleCrudWindow.baml

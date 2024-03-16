@@ -12,6 +12,7 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Vertical" Grid.Column="0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -112,6 +113,34 @@
                         <GridViewColumn
                             Header="DeleteDt"
                             DisplayMemberBinding="{Binding Path=DeleteDt}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Column="3">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Content="Продажі" HorizontalAlignment="Center"
+                   FontSize="22" FontWeight="DemiBold"/>
+                <Button x:Name="AddSale_Btn" Content="+"
+                        Width="30" Height="30"  Margin="5 5 5 5" FontSize="20"
+                        Click="AddSale_Btn_Click"/>
+            </StackPanel>
+            <ListView x:Name="SalesView" ItemsSource="{Binding sales}"
+                      MouseDoubleClick="SalesView_MouseDoubleClick"
+                      Height="570"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                      ScrollViewer.CanContentScroll="True">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn
+                            Header="Id"
+                            DisplayMemberBinding="{Binding Path=Id}"/>
+                        <GridViewColumn
+                            Header="Дата"
+                            DisplayMemberBinding="{Binding Path=SaleDt}"/>
+                        <GridViewColumn
+                            Header="Кількість"
+                            DisplayMemberBinding="{Binding Path=Quantity}"/>
                     </GridView>
                 </ListView.View>
             </ListView>

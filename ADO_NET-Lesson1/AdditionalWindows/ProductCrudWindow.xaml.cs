@@ -22,12 +22,10 @@ namespace ADO_NET_Lesson1.AdditionalWindows
     public partial class ProductCrudWindow : Window
     {
         public Product? Product { get; set; }
-        private SqlConnection _connection;
-        public ProductCrudWindow(SqlConnection connection)
+        public ProductCrudWindow()
         {
             InitializeComponent();
             Product = null!;
-            _connection = connection;
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -63,22 +61,6 @@ namespace ADO_NET_Lesson1.AdditionalWindows
             Product.Name = Name_TxtBx.Text;
             Product.Price = Convert.ToDouble(Price_TxtBx.Text);
 
-            String sql = "UPDATE Products SET Name=(@name), Price=(@price) WHERE Id=(@id)";
-            using SqlCommand cmd = new(sql, _connection);
-            cmd.Parameters.AddWithValue("@name", Product.Name);
-            cmd.Parameters.AddWithValue("@price", Product.Price);
-            cmd.Parameters.AddWithValue("@id", Product.Id);
-
-            try
-            {
-                cmd.ExecuteNonQuery();
-                MessageBox.Show("Зміни збережено!");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
             DialogResult = true;
         }
         private void Delete_Btn_Click(object sender, RoutedEventArgs e)
@@ -87,20 +69,10 @@ namespace ADO_NET_Lesson1.AdditionalWindows
             if (dialogResult == MessageBoxResult.OK)
             {
                 Product.DeleteDt = DateTime.Now;
-                String sql = "UPDATE Products SET DeleteDt=(@DeleteDt) WHERE Id=(@id)";
-                using SqlCommand cmd = new(sql, _connection);
-                cmd.Parameters.AddWithValue("@DeleteDt", Product.DeleteDt);
-                cmd.Parameters.AddWithValue("@id", Product.Id);
-
-                try
-                {
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Вилучення успішне!");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+            }
+            else
+            {
+                return;
             }
             DialogResult = true;
         }

@@ -22,12 +22,10 @@ namespace ADO_NET_Lesson1.AdditionalWindows
     public partial class DepartmentCrudWindow : Window
     {
         public Department? Department { get; set; }
-        private SqlConnection _connection;
-        public DepartmentCrudWindow(SqlConnection connection)
+        public DepartmentCrudWindow()
         {
             InitializeComponent();
             Department = null!;
-            this._connection = connection;
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -64,21 +62,6 @@ namespace ADO_NET_Lesson1.AdditionalWindows
 
             Department.Name = Name_TxtBx.Text;
 
-            String sql = "UPDATE Departments SET Name=(@name) WHERE Id=(@id)";
-            using SqlCommand cmd = new(sql, _connection);
-            cmd.Parameters.AddWithValue("@name", Department.Name);
-            cmd.Parameters.AddWithValue("@id", Department.Id);
-
-            try
-            {
-                cmd.ExecuteNonQuery();
-                MessageBox.Show("Зміни збережено!");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
             DialogResult = true;
         }
         private void Delete_Btn_Click(object sender, RoutedEventArgs e)
@@ -87,20 +70,10 @@ namespace ADO_NET_Lesson1.AdditionalWindows
             if (dialogResult == MessageBoxResult.OK)
             {
                 Department.DeleteDt = DateTime.Now;
-                String sql = "UPDATE Departments SET DeleteDt=(@DeleteDt) WHERE Id=(@id)";
-                using SqlCommand cmd = new(sql, _connection);
-                cmd.Parameters.AddWithValue("@DeleteDt", Department.DeleteDt);
-                cmd.Parameters.AddWithValue("@id", Department.Id);
-
-                try
-                {
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Вилучення успішне!");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+            }
+            else
+            {
+                return;
             }
             DialogResult = true;
         }
