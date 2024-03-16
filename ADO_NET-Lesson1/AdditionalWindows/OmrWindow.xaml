@@ -1,26 +1,29 @@
-﻿<Window x:Class="ADO_NET_Lesson1.AdditionalWindows.OmrWindow"
+﻿<Window x:Class="ADO_NET_Lesson1.AdditionalWindows.OrmWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ADO_NET_Lesson1.AdditionalWindows"
         mc:Ignorable="d"
-       Title="OmrWindow" Height="1050" Width="1800">
+        Loaded="Window_Loaded"
+        Title="OrmWindow" Height="650" Width="1500">
     <Grid ShowGridLines="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <StackPanel Orientation="Vertical"
-                    Grid.Row="0" Grid.Column="0">
-            <Label Content="Відділи" HorizontalAlignment="Center"
+        <StackPanel Orientation="Vertical" Grid.Column="0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Content="Відділи" HorizontalAlignment="Center"
                    FontSize="22" FontWeight="DemiBold"/>
-            <ListView x:Name="FirstView" ItemsSource="{Binding departments}" 
-                      MouseDoubleClick="FirstView_MouseDoubleClick">
+                <Button x:Name="AddDepartment_Btn" Content="+"
+                        Width="30" Height="30"  Margin="5 5 5 5" FontSize="20"
+                        Click="AddDepartment_Btn_Click"/>
+            </StackPanel>
+            <ListView x:Name="DepartmentsView" ItemsSource="{Binding departments}" 
+                      MouseDoubleClick="DepartmentsView_MouseDoubleClick"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn
@@ -29,14 +32,20 @@
                         <GridViewColumn
                             Header="Name"
                             DisplayMemberBinding="{Binding Path=Name}"/>
+                        <GridViewColumn
+                            Header="DeleteDt"
+                            DisplayMemberBinding="{Binding Path=DeleteDt}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
         </StackPanel>
         <StackPanel Orientation="Vertical"
-                    Grid.Row="0" Grid.Column="2">
-            <Label Content="Продукти" HorizontalAlignment="Center"
+                    Grid.Row="0" Grid.Column="1">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Content="Продукти" HorizontalAlignment="Center"
                    FontSize="22" FontWeight="DemiBold"/>
+                <Button x:Name="AddProduct_Btn" Content="+" Width="50" FontSize="23" Click="AddProduct_Btn_Click"/>
+            </StackPanel>
             <ListView x:Name="SecondView" ItemsSource="{Binding products}" 
                       MouseDoubleClick="SecondView_MouseDoubleClick">
                 <ListView.View>
@@ -47,16 +56,21 @@
                         <GridViewColumn
                             Header="Name"
                             DisplayMemberBinding="{Binding Path=Name}"/>
+                        <GridViewColumn
+                            Header="Price"
+                            DisplayMemberBinding="{Binding Path=Price}"/>
+                        <GridViewColumn
+                            Header="Delete Date"
+                            DisplayMemberBinding="{Binding Path=DeleteDt}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
         </StackPanel>
-        <StackPanel Orientation="Vertical"
-                    Grid.Row="1" Grid.Column="0">
+        <StackPanel Orientation="Vertical" Grid.Column="2">
             <Label Content="Менеджери" HorizontalAlignment="Center"
                    FontSize="22" FontWeight="DemiBold"/>
-            <ListView x:Name="ThirdView" ItemsSource="{Binding managers}" 
-                      MouseDoubleClick="ThirdView_MouseDoubleClick">
+            <ListView x:Name="ManagersView" ItemsSource="{Binding managers}"
+                      MouseDoubleClick="ManagersView_MouseDoubleClick">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn

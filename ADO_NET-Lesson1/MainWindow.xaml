@@ -6,19 +6,17 @@
         xmlns:local="clr-namespace:ADO_NET_Lesson1"
         mc:Ignorable="d"
        
-        Title="MainWindow" Height="1050" Width="1800">
+        Title="MainWindow" Height="560" Width="420">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Button x:Name="Status_Btn" Content="Open Status Window" 
-                Grid.Column="0"  Width="300" Height="150"
+        <StackPanel>
+            <Button x:Name="Status_Btn" Content="Open Status Window" 
+                Grid.Column="0" Margin="50" Height="90"
                 FontSize="25" FontWeight="DemiBold"
                 Click="Status_Btn_Click"/>
-        <Button x:Name="OMR_Btn" Content="Open OMR Window"
-                Grid.Column="1" Width="300" Height="150"
+            <Button x:Name="ORM_Btn" Content="Open ORM Window"
+                Grid.Column="1" Margin="50" Height="90"
                 FontSize="25" FontWeight="DemiBold"
-                Click="OMR_Btn_Click"/>
+                Click="ORM_Btn_Click"/>
+        </StackPanel>
     </Grid>
 </Window>

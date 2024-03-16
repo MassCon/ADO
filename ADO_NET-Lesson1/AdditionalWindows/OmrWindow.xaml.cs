@@ -21,14 +21,14 @@ namespace ADO_NET_Lesson1.AdditionalWindows
     /// <summary>
     /// Interaction logic for OmrWindow.xaml
     /// </summary>
-    public partial class OmrWindow : Window
+    public partial class OrmWindow : Window
     {
         public ObservableCollection<Entities.Department> departments { get; set; }
         public ObservableCollection<Entities.Product> products { get; set; }
         public ObservableCollection<Entities.Manager> managers { get; set; }
-        private DepartmentCrudWindow _dialogDepartment;
+        private ProductCrudWindow _dialogProduct;
         public SqlConnection _connection;
-        public OmrWindow()
+        public OrmWindow()
         {
             InitializeComponent();
             departments = new();
@@ -36,7 +36,6 @@ namespace ADO_NET_Lesson1.AdditionalWindows
             managers = new ObservableCollection<Entities.Manager>();
             DataContext = this;
             _connection = new(App.ConnectionString);
-            _dialogDepartment = null;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -45,18 +44,14 @@ namespace ADO_NET_Lesson1.AdditionalWindows
             try
             {
                 _connection.Open();
-                using SqlCommand cmd = new() { Connection = _connection };
-                cmd.CommandText = "SELECT Id, Name FROM Departments D";
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    departments.Add(new Entities.Department
-                    {
-                        Id = reader.GetGuid(0),
-                        Name = reader.GetString(1)
 
-                    });
-                }
+                using SqlCommand cmd = new() { Connection = _connection };
+                cmd.CommandText = "SELECT D.* FROM Departments D";
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                    departments.Add(new Entities.Department(reader));
+
                 reader.Close();
             }
             catch (SqlException ex)
@@ -70,23 +65,19 @@ namespace ADO_NET_Lesson1.AdditionalWindows
             try
             {
                 using SqlCommand cmd = new() { Connection = _connection };
-                cmd.CommandText = "SELECT Id, Name FROM Products D";
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    products.Add(new Entities.Product
-                    {
-                        Id = reader.GetGuid(0),
-                        Name = reader.GetString(1)
 
-                    });
-                }
+                cmd.CommandText = "SELECT P.* FROM Products P WHERE P.DeleteDt IS NULL";
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                    products.Add(new Entities.Product(reader));
+
                 reader.Close();
             }
             catch (SqlException ex)
             {
                 MessageBox.Show(ex.Message, "Window will be closed", MessageBoxButton.OK, MessageBoxImage.Error);
-                this.Close();
+                Close();
             }
             #endregion
 
@@ -120,32 +111,108 @@ namespace ADO_NET_Lesson1.AdditionalWindows
 
         }
 
-        private void FirstView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        #region Редагування записів
+        private void DepartmentsView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            _dialogDepartment = new DepartmentCrudWindow();
-            Department? department = ((ListView)sender).SelectedItem as Entities.Department;
-            _dialogDepartment.Department = department;
-            if (_dialogDepartment.ShowDialog() == true)
+            if (sender is ListView item)
             {
-                if (_dialogDepartment.Department is null)
+                if (item.SelectedItem is Entities.Department department)
+                {
+                    DepartmentCrudWindow dialog = new DepartmentCrudWindow(_connection);
+                    dialog.Department = department;
+                    dialog.ShowDialog();
+                }
+            }
+        }
+        private void SecondView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            _dialogProduct = new ProductCrudWindow();
+            Product? product = ((ListView)sender).SelectedItem as Entities.Product;
+            _dialogProduct.Product = product;
+            if (_dialogProduct.ShowDialog() == true)
+            {
+                if (_dialogProduct.Product is null)
                 {
                     MessageBox.Show("Deleted");
                 }
                 else
                 {
-                    MessageBox.Show(department.ToString());
+                    MessageBox.Show(product.ToString());
                 }
             }
         }
-
-        private void SecondView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void ManagersView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
+            if (sender is ListView item)
+            {
+                if (item.SelectedItem is Entities.Manager manager)
+                {
+                    ManagerCrudWindow dialog = new ManagerCrudWindow() { Owner = this };
+                    dialog.Manager = manager;
+                    if (dialog.ShowDialog() == true)
+                    {
+                        MessageBox.Show(dialog.Manager.ToString());
+                    }
+                }
+            }
         }
+        #endregion
 
-        private void ThirdView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        #region Додавання записів
+        private void AddDepartment_Btn_Click(object sender, RoutedEventArgs e)
         {
+            DepartmentCrudWindow dialog = new DepartmentCrudWindow(_connection);
+            if (dialog.ShowDialog() == true)
+            {
+                if (dialog.Department is not null)
+                {
+                    String sql = "INSERT INTO Departments(Id,Name) VALUES (@id,@name)";
+                    using SqlCommand cmd = new(sql, _connection);
+                    cmd.Parameters.AddWithValue("@id", dialog.Department.Id);
+                    cmd.Parameters.AddWithValue("@name", dialog.Department.Name);
 
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Відділ успішно додано!");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
         }
+        private void AddProduct_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            ProductCrudWindow dialog = new ProductCrudWindow() { Product = null };
+            if (dialog.ShowDialog() == true)
+            {
+                if (dialog.Product is not null)
+                {
+                    string sql = "INSERT INTO Products(Id, Name, Price) VALUES( @id, @name, @price ) ";
+                    using SqlCommand cmd = new SqlCommand(sql, _connection);
+                    cmd.Parameters.AddWithValue("@id", dialog.Product.Id);
+                    cmd.Parameters.AddWithValue("@name", dialog.Product.Name);
+                    cmd.Parameters.AddWithValue("@price", dialog.Product.Price);
+
+                    #region Not recomended
+                    //string sql = $"INSERT INTO Products(Id, Name, Price) " +
+                    //    $"VALUES('{dialog.Product.Id}', N'{dialog.Product.Name}', {dialog.Product.Price})";
+                    //using SqlCommand cmd = new SqlCommand(sql, _connection);
+                    //try
+                    //{
+                    //    cmd.ExecuteNonQuery();
+                    //    MessageBox.Show("Insert OK");
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    MessageBox.Show(ex.Message);
+                    //}
+                    #endregion
+                }
+            }
+        }
+        #endregion
     }
 }

@@ -33,3 +33,7 @@ C:\Users\andre\source\repos\ADO_NET-Lesson1\ADO_NET-Lesson1\obj\Debug\net6.0-win
 C:\Users\andre\source\repos\ADO_NET-Lesson1\ADO_NET-Lesson1\obj\Debug\net6.0-windows\AdditionalWindows\DepartmentCrudWindow.baml
 C:\Users\andre\source\repos\ADO_NET-Lesson1\ADO_NET-Lesson1\obj\Debug\net6.0-windows\AdditionalWindows\OmrWindow.baml
 C:\Users\andre\source\repos\ADO_NET-Lesson1\ADO_NET-Lesson1\obj\Debug\net6.0-windows\AdditionalWindows\StatusWindow.baml
+C:\Users\andre\source\repos\ADO_NET-Lesson1\ADO_NET-Lesson1\obj\Debug\net6.0-windows\AdditionalWindows\ManagerCrudWindow.g.cs
+C:\Users\andre\source\repos\ADO_NET-Lesson1\ADO_NET-Lesson1\obj\Debug\net6.0-windows\AdditionalWindows\ProductCrudWindow.g.cs
+C:\Users\andre\source\repos\ADO_NET-Lesson1\ADO_NET-Lesson1\obj\Debug\net6.0-windows\AdditionalWindows\ManagerCrudWindow.baml
+C:\Users\andre\source\repos\ADO_NET-Lesson1\ADO_NET-Lesson1\obj\Debug\net6.0-windows\AdditionalWindows\ProductCrudWindow.baml

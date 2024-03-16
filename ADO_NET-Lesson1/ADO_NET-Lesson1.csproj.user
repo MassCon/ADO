@@ -10,7 +10,13 @@
     <Compile Update="AdditionalWindows\DepartmentCrudWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="AdditionalWindows\ManagerCrudWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="AdditionalWindows\OmrWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="AdditionalWindows\ProductCrudWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="AdditionalWindows\StatusWindow.xaml.cs">
@@ -18,10 +24,21 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Update="SQL\AddDeleteDtToDepartments.sql">
+      <SubType>Component</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="AdditionalWindows\DepartmentCrudWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="AdditionalWindows\ManagerCrudWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="AdditionalWindows\OmrWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="AdditionalWindows\ProductCrudWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="AdditionalWindows\StatusWindow.xaml">

@@ -25,9 +25,9 @@ namespace ADO_NET_Lesson1
             window.Show();
         }
 
-        private void OMR_Btn_Click(object sender, RoutedEventArgs e)
+        private void ORM_Btn_Click(object sender, RoutedEventArgs e)
         {
-            Window window = new OmrWindow();
+            Window window = new OrmWindow();
             window.Show();
         }
     }

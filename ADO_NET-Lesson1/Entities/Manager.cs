@@ -15,5 +15,17 @@ namespace ADO_NET_Lesson1.Entities
         public Guid IdMainDep { get; set; }
         public Guid? IdSecDep { get; set; }
         public Guid? IdChief { get; set; }
+
+        public Manager()
+        {
+            Id = Guid.NewGuid();
+            Surname = null!;
+            Name = null!;
+            Secname = null!;
+        }
+        public override string ToString()
+        {
+            return $"{Id.ToString()[..4]} {Surname} {Name} {Secname} {IdMainDep.ToString()[..4]}";
+        }
     }
 }
