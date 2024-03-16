@@ -26,8 +26,13 @@
             <StackPanel Orientation="Horizontal">
                 <Label>Departments</Label>
                 <Button x:Name="AddDepartment" Click="AddDepartment_Click">Add</Button>
+                <CheckBox x:Name="ShowAllDeps_ChckBx" Content="Include deleted"
+                          Checked="ShowAllDeps_ChckBx_Checked"
+                          Unchecked="ShowAllDeps_ChckBx_Unchecked"></CheckBox>
             </StackPanel>
-            <ListView x:Name="Departments_LstVw">
+            <ListView x:Name="Departments_LstVw" MouseDoubleClick="Departments_LstVw_MouseDoubleClick"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                      ScrollViewer.CanContentScroll="True">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn
@@ -36,6 +41,10 @@
                         <GridViewColumn
                             Header="Name"
                             DisplayMemberBinding="{Binding Path=Name}"/>
+                        <GridViewColumn
+                            Header="Delete Date"
+                            DisplayMemberBinding="{Binding Path=DeleteDt}"
+                            Width="0"/>
                     </GridView>
                 </ListView.View>
             </ListView>
