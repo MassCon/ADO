@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Loaded="Window_Loaded"
         Closed="Window_Closed"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="1050" Width="1800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -18,6 +18,7 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -27,24 +28,107 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <Label Content="Status Monitor" Grid.ColumnSpan="2" 
                    FontSize="23" FontWeight="DemiBold" HorizontalAlignment="Center"/>
+
             <Label Content="Connection: " Grid.Row="1" FontSize="20"/>
             <Label x:Name="StatusConnection" Grid.Column="1" Grid.Row="1" FontSize="20"/>
 
+            <Label Content="Departments: " Grid.Row="2" 
+                   FontSize="20"/>
+            <Label x:Name="StatusDepartments" Grid.Column="1" Grid.Row="2" FontSize="20"/>
+
+            <Label Content="Products: " Grid.Row="3" 
+                   FontSize="20"/>
+            <Label x:Name="StatusProducts" Grid.Column="1" Grid.Row="3" FontSize="20"/>
+
+            <Label Content="Managers: " Grid.Row="4" 
+                   FontSize="20"/>
+            <Label x:Name="StatusManagers" Grid.Column="1" Grid.Row="4" FontSize="20"/>
+
         </Grid>
-        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0">
-            <Label Content="Install DB" HorizontalAlignment="Center"
-                   FontSize="24" FontWeight="DemiBold"/>
+
+        <Grid Grid.Column="0" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
             <Button x:Name="InstallDepartments"
                     Content="Install Departments" 
                     FontSize="20" Margin="5"
-                    Click="InstallDepartments_Click"/>
+                    Click="InstallDepartments_Click"
+                    Grid.Column="0" Grid.Row="0"/>
+            <Button x:Name="InstallProducts"
+                    Content="Install Products" 
+                    FontSize="20" Margin="5"
+                    Click="InstallProducts_Click"
+                    Grid.Column="0" Grid.Row="1"/>
+            <Button x:Name="InstallManagers"
+                    Content="Install Managers" 
+                    FontSize="20" Margin="5"
+                    Click="InstallManagers_Click"
+                    Grid.Column="0" Grid.Row="2"/>
+
             <Button x:Name="FillDepartments"
                     Content="Fill Departments"
                     FontSize="20" Margin="5"
-                    Click="FillDepartments_Click"/>
+                    Click="FillDepartments_Click"
+                    Grid.Column="1" Grid.Row="0"/>
+            <Button x:Name="FillProducts"
+                    Content="Fill Products"
+                    FontSize="20" Margin="5"
+                    Click="FillProducts_Click"
+                    Grid.Column="1" Grid.Row="1"/>
+            <Button x:Name="FillManagers"
+                    Content="Fill Managers"
+                    FontSize="20" Margin="5"
+                    Click="FillManagers_Click"
+                    Grid.Column="1" Grid.Row="2"/>
+
+
+            <Button x:Name="DropDepartments"
+                    Content="Drop Departments"
+                    FontSize="20" Margin="5"
+                    Click="DropDepartments_Click"
+                    Grid.Column="2" Grid.Row="0"/>
+            <Button x:Name="DropProducts"
+                    Content="Drop Products"
+                    FontSize="20" Margin="5"
+                    Click="DropProducts_Click"
+                    Grid.Column="2" Grid.Row="1"/>
+            <Button x:Name="DropManagers"
+                    Content="Drop Managers"
+                    FontSize="20" Margin="5"
+                    Click="DropManagers_Click"
+                    Grid.Column="2" Grid.Row="2"/>
+        </Grid>
+
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1">
+            <Label Content="Departments" HorizontalAlignment="Center"
+                    FontSize="24" FontWeight="DemiBold"/>
+            <ScrollViewer MaxHeight="120">
+                <TextBlock x:Name="ViewDepartments"/>
+            </ScrollViewer>
+            <Label Content="Products" HorizontalAlignment="Center"
+                    FontSize="24" FontWeight="DemiBold"/>
+            <ScrollViewer MaxHeight="120">
+                <TextBlock x:Name="ViewProducts"/>
+            </ScrollViewer>
+            <Label Content="Managers" HorizontalAlignment="Center"
+                    FontSize="24" FontWeight="DemiBold"/>
+            <ScrollViewer MaxHeight="120">
+                <TextBlock x:Name="ViewManagers"/>
+            </ScrollViewer>
         </StackPanel>
     </Grid>
 </Window>
