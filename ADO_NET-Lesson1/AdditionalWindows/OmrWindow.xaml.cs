@@ -26,7 +26,6 @@ namespace ADO_NET_Lesson1.AdditionalWindows
         public ObservableCollection<Entities.Department> departments { get; set; }
         public ObservableCollection<Entities.Product> products { get; set; }
         public ObservableCollection<Entities.Manager> managers { get; set; }
-        private ProductCrudWindow _dialogProduct;
         public SqlConnection _connection;
         public OrmWindow()
         {
@@ -124,20 +123,15 @@ namespace ADO_NET_Lesson1.AdditionalWindows
                 }
             }
         }
-        private void SecondView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void ProductsView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            _dialogProduct = new ProductCrudWindow();
-            Product? product = ((ListView)sender).SelectedItem as Entities.Product;
-            _dialogProduct.Product = product;
-            if (_dialogProduct.ShowDialog() == true)
+            if (sender is ListView item)
             {
-                if (_dialogProduct.Product is null)
+                if (item.SelectedItem is Entities.Product product)
                 {
-                    MessageBox.Show("Deleted");
-                }
-                else
-                {
-                    MessageBox.Show(product.ToString());
+                    ProductCrudWindow dialog = new ProductCrudWindow(_connection);
+                    dialog.Product = product;
+                    dialog.ShowDialog();
                 }
             }
         }
@@ -147,12 +141,9 @@ namespace ADO_NET_Lesson1.AdditionalWindows
             {
                 if (item.SelectedItem is Entities.Manager manager)
                 {
-                    ManagerCrudWindow dialog = new ManagerCrudWindow() { Owner = this };
+                    ManagerCrudWindow dialog = new ManagerCrudWindow(_connection) { Owner = this };
                     dialog.Manager = manager;
-                    if (dialog.ShowDialog() == true)
-                    {
-                        MessageBox.Show(dialog.Manager.ToString());
-                    }
+                    dialog.ShowDialog();
                 }
             }
         }
@@ -185,16 +176,26 @@ namespace ADO_NET_Lesson1.AdditionalWindows
         }
         private void AddProduct_Btn_Click(object sender, RoutedEventArgs e)
         {
-            ProductCrudWindow dialog = new ProductCrudWindow() { Product = null };
+            ProductCrudWindow dialog = new ProductCrudWindow(_connection);
             if (dialog.ShowDialog() == true)
             {
                 if (dialog.Product is not null)
                 {
-                    string sql = "INSERT INTO Products(Id, Name, Price) VALUES( @id, @name, @price ) ";
+                    string sql = "INSERT INTO Products(Id, Name, Price) VALUES(@id, @name, @price)";
                     using SqlCommand cmd = new SqlCommand(sql, _connection);
                     cmd.Parameters.AddWithValue("@id", dialog.Product.Id);
                     cmd.Parameters.AddWithValue("@name", dialog.Product.Name);
                     cmd.Parameters.AddWithValue("@price", dialog.Product.Price);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Продукт успішно додано!");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
 
                     #region Not recomended
                     //string sql = $"INSERT INTO Products(Id, Name, Price) " +
@@ -210,6 +211,35 @@ namespace ADO_NET_Lesson1.AdditionalWindows
                     //    MessageBox.Show(ex.Message);
                     //}
                     #endregion
+                }
+            }
+        }
+        private void AddManager_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            ManagerCrudWindow dialog = new ManagerCrudWindow(_connection) { Owner = this };
+            if (dialog.ShowDialog() == true)
+            {
+                if (dialog.Manager is not null)
+                {
+                    string sql = "INSERT INTO Managers(Id, Name, Surname, Secname, Id_main_dep, Id_sec_dep, Id_chief) VALUES(@id, @name, @surname, @secname, @main_dep, @sec_dep, @chief)";
+                    using SqlCommand cmd = new SqlCommand(sql, _connection);
+                    cmd.Parameters.AddWithValue("@name", dialog.Manager.Name);
+                    cmd.Parameters.AddWithValue("@surname", dialog.Manager.Surname);
+                    cmd.Parameters.AddWithValue("@secname", dialog.Manager.Secname is null ? DBNull.Value : dialog.Manager.Secname);
+                    cmd.Parameters.AddWithValue("@main_dep", dialog.Manager.IdMainDep);
+                    cmd.Parameters.AddWithValue("@sec_dep", dialog.Manager.IdSecDep is null ? DBNull.Value : dialog.Manager.IdSecDep);
+                    cmd.Parameters.AddWithValue("@chief", dialog.Manager.IdChief is null ? DBNull.Value : dialog.Manager.IdChief);
+                    cmd.Parameters.AddWithValue("@id", dialog.Manager.Id);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Співробітника успішно додано!");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             }
         }

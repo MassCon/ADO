@@ -15,6 +15,7 @@ namespace ADO_NET_Lesson1.Entities
         public Guid IdMainDep { get; set; }
         public Guid? IdSecDep { get; set; }
         public Guid? IdChief { get; set; }
+        public DateTime? DeleteDt { get; set; }
 
         public Manager()
         {

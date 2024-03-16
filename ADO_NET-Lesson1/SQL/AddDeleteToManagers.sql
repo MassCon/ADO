@@ -1,0 +1,2 @@
+﻿ALTER TABLE Managers
+ADD DeleteDt DATETIME

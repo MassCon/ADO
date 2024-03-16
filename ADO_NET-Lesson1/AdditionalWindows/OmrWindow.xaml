@@ -23,7 +23,9 @@
             </StackPanel>
             <ListView x:Name="DepartmentsView" ItemsSource="{Binding departments}" 
                       MouseDoubleClick="DepartmentsView_MouseDoubleClick"
-                      ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True">
+                      Height="590"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      ScrollViewer.CanContentScroll="True">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn
@@ -44,10 +46,15 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Content="Продукти" HorizontalAlignment="Center"
                    FontSize="22" FontWeight="DemiBold"/>
-                <Button x:Name="AddProduct_Btn" Content="+" Width="50" FontSize="23" Click="AddProduct_Btn_Click"/>
+                <Button x:Name="AddProduct_Btn" Content="+" 
+                        Width="30" Height="30"  Margin="5 5 5 5" FontSize="20"
+                        Click="AddProduct_Btn_Click"/>
             </StackPanel>
-            <ListView x:Name="SecondView" ItemsSource="{Binding products}" 
-                      MouseDoubleClick="SecondView_MouseDoubleClick">
+            <ListView x:Name="ProductsView" ItemsSource="{Binding products}" 
+                      MouseDoubleClick="ProductsView_MouseDoubleClick"
+                      Height="590"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                      ScrollViewer.CanContentScroll="True">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn
@@ -67,10 +74,18 @@
             </ListView>
         </StackPanel>
         <StackPanel Orientation="Vertical" Grid.Column="2">
-            <Label Content="Менеджери" HorizontalAlignment="Center"
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Content="Менеджери" HorizontalAlignment="Center"
                    FontSize="22" FontWeight="DemiBold"/>
+                <Button x:Name="AddManager_Btn" Content="+"
+                        Width="30" Height="30"  Margin="5 5 5 5" FontSize="20"
+                        Click="AddManager_Btn_Click"/>
+            </StackPanel>
             <ListView x:Name="ManagersView" ItemsSource="{Binding managers}"
-                      MouseDoubleClick="ManagersView_MouseDoubleClick">
+                      MouseDoubleClick="ManagersView_MouseDoubleClick"
+                      Height="570"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                      ScrollViewer.CanContentScroll="True">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn
@@ -81,7 +96,22 @@
                             DisplayMemberBinding="{Binding Path=Surname}"/>
                         <GridViewColumn
                             Header="Name"
-                            DisplayMemberBinding="{Binding Path=Surname}"/>
+                            DisplayMemberBinding="{Binding Path=Name}"/>
+                        <GridViewColumn
+                            Header="Secname"
+                            DisplayMemberBinding="{Binding Path=Secname}"/>
+                        <GridViewColumn
+                            Header="MainDep"
+                            DisplayMemberBinding="{Binding Path=IdMainDep}"/>
+                        <GridViewColumn
+                            Header="SecDep"
+                            DisplayMemberBinding="{Binding Path=IdSecDep}"/>
+                        <GridViewColumn
+                            Header="Chief"
+                            DisplayMemberBinding="{Binding Path=IdChief}"/>
+                        <GridViewColumn
+                            Header="DeleteDt"
+                            DisplayMemberBinding="{Binding Path=DeleteDt}"/>
                     </GridView>
                 </ListView.View>
             </ListView>

@@ -47,7 +47,7 @@ namespace ADO_NET_Lesson1.AdditionalWindows
         {
             if (Department is null)
             {
-                Department = new Department();
+                return;
             }
 
             if (Name_TxtBx.Text.Equals(String.Empty))
@@ -81,7 +81,6 @@ namespace ADO_NET_Lesson1.AdditionalWindows
 
             DialogResult = true;
         }
-
         private void Delete_Btn_Click(object sender, RoutedEventArgs e)
         {
             var dialogResult = MessageBox.Show("Впевнені, що хочете вилучити відділ?", "Вилучення", MessageBoxButton.OKCancel);
@@ -105,7 +104,6 @@ namespace ADO_NET_Lesson1.AdditionalWindows
             }
             DialogResult = true;
         }
-
         private void Cancel_Btn_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;

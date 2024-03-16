@@ -13,8 +13,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="SQL\AddDeleteToManagers.sql">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
     <None Update="SQL\AddDeleteDt.sql">
       <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="SQL\CheckIsDeleted.sql">
+      <SubType>Component</SubType>
     </None>
   </ItemGroup>
 
